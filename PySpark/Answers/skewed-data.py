@@ -1,4 +1,11 @@
 
+Skewed data
+-------------
+Skewed data is when the majority of data points are heavily concentrated on one side or around a few keys, making the distribution uneven.
+
+In big data, this causes bottlenecks because one processing unit gets assigned almost all the work.
+
+
 
 how tos handle skewed data in wide transformations:
 
