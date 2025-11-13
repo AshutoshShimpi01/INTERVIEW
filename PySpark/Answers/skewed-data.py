@@ -60,3 +60,79 @@ While not a true skew fix, this is a basic, necessary step.
 
 * **How it works:** You increase the overall number of partitions for the job (e.g., using `.repartition()`).
 * **Limitation:** It only helps when the **total volume of data is too large** for the current number of partitions. It **does not solve true key skew**, as all records for a single skewed key will still end up in the same partition regardless of how many total partitions exist.
+
+
+
+
+
+
+
+
+
+
+Here’s a **clear and detailed explanation of salting in PySpark**:
+--------------------------------------------------------------------
+---
+
+### ✅ **What is Salting?**
+Salting is a technique used to **reduce data skew** in distributed systems like Spark.  
+Data skew happens when **one or a few keys have a very large number of records**, causing:
+- Uneven partition sizes
+- Slow tasks (stragglers)
+- Memory issues during joins or aggregations
+
+---
+
+### ✅ **Why Salting Works**
+Normally, Spark partitions data by key. If one key is very common (e.g., `customer_id = 123` appears millions of times), all those rows go to **one partition**, creating a bottleneck.
+
+**Salting breaks this pattern** by adding a **random extra value (salt)** to the key, so the same key is split into multiple sub-keys:
+- Original key: `123`
+- Salted keys: `123_0`, `123_1`, `123_2` … up to N salts
+
+This way, the heavy key’s data is spread across multiple partitions.
+
+---
+
+### ✅ **How It’s Done**
+1. **Choose number of salts** (e.g., 10)
+2. **Add a random salt column** using `rand()` or `monotonically_increasing_id()`
+3. **Create a new composite key**: `original_key + "_" + salt`
+4. Perform join or aggregation on this salted key
+5. After processing, **remove salt** and combine results back to original key
+
+---
+
+### ✅ **Simple Example**
+```python
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, rand
+
+spark = SparkSession.builder.appName("SaltingExample").getOrCreate()
+
+# Skewed data
+data = [(1, "A")] * 1000 + [(2, "B")] * 10
+df = spark.createDataFrame(data, ["key", "value"])
+
+# Add salt
+num_salts = 5
+df_salted = df.withColumn("salt", (rand() * num_salts).cast("int"))
+
+# Create salted key
+df_salted = df_salted.withColumn("salted_key", col("key").cast("string") + "_" + col("salt"))
+
+df_salted.show(10)
+```
+
+**Result:**  
+Key `1` becomes `1_0`, `1_1`, etc., spreading its rows across partitions.
+
+---
+
+### ✅ **When to Use Salting**
+- During **joins** where one table has skewed keys
+- During **groupBy** or **reduceByKey** operations with uneven key distribution
+
+---
+
+Would you like me to now **show a combined script that uses salting + repartition for a skewed join**, or **draw a diagram showing how salting redistributes data across partitions**?
