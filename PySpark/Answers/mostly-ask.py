@@ -16,7 +16,7 @@ Here are 15 scenario-based PySpark interview questions with concise sample answe
 4. **What decides the number of DataFrame partitions?**  
    Balance between too few partitions (slows parallelism) and too many (overheads, small tasks). Tune partitions based on cluster size and input data volume.
 
-5. **How do you handle skewed data in wide transformations?**  
+5. **How do you handle skewed data in wide transformations?**     (Skewed data means the distribution is not symmetrical)
    Add random salts to keys, increase partitions, or use custom partitioning to spread skewed keys across the cluster evenly.
 
 6. **How can you load evolving schema data robustly?**  
