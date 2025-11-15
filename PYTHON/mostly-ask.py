@@ -5,6 +5,15 @@ Here are 30 concise Python interview questions and answers for a Data Engineer r
 1. **What are lists, tuples, and sets?**  
 Lists are mutable and ordered. Tuples are immutable and ordered. Sets are unordered and store unique elements—good for deduplicating data.[5][6]
 
+List: Ordered, mutable, allows duplicates ([])
+
+Tuple: Ordered, immutable, allows duplicates (())
+
+Set: Unordered, mutable, no duplicates (set())
+
+Dictionary: Key-value pairs, unordered, mutable no duplicates({}  Keys must be unique, values can be duplicated)
+
+
 2. **Remove duplicates from a list?**  
 Use `list(set(mylist))` or a set comprehension.
 
