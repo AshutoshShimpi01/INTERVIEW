@@ -20,3 +20,11 @@ print(st)
 print(result)
 
 
+
+st = input("Enter a string: ")
+
+result = st[0].upper() + st[1:]
+print(result)
+
+
+
