@@ -10,3 +10,15 @@ if st :
 o/t :
 Enter a string. : hello
 Hello
+
+
+
+st = input('Enter a string. : ')
+
+# Use .title() to capitalize the first letter of each word
+output = st.title()
+
+print(output)
+
+Enter a string. : hello bro
+Hello Bro
