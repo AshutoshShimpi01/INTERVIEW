@@ -4,9 +4,13 @@ Here are 6 concise interview questions and answers on HBase:
 
 ***
 
-1. **What is Apache HBase?**  
-HBase is a distributed, NoSQL column-oriented database built on top of Hadoop HDFS. It is designed for real-time read/write access to large datasets and is modeled after Google’s Bigtable.[1][3][7]
+1. **What is Apache HBase?** 
+  
+HBase is a NoSQL distributed database for Big Data.
 
+It runs on HDFS (Hadoop) and provides fast, random, real-time read/write access to massive, sparse datasets (billions of rows).
+                                                                                                             
+                                                                                                             
 2. **How is HBase different from traditional RDBMS?**  
 HBase has a flexible schema, supports only basic queries (not full SQL), and does not offer ACID transactions. It’s optimized for batch jobs and large tables, whereas RDBMS enforces strong schema and ACID properties.[6][1]
 
