@@ -11,7 +11,7 @@ Tuple: Ordered, immutable, allows duplicates (())
 
 Set: Unordered, mutable, no duplicates (set())
 
-Dictionary: Key-value pairs, unordered, mutable no duplicates({}  Keys must be unique, values can be duplicated)
+Dictionary: Key-value pairs, ordered, mutable no duplicates({}         Keys must be unique, values can be duplicated)
 
 
 2. **Remove duplicates from a list?**  
