@@ -1,3 +1,16 @@
+
+storage :
+BigQuery storage is a fully managed, durable, and encrypted service designed for analytic workloads over large datasets.
+compute :
+The compute layer is responsible for executing SQL queries using a massively parallel processing (MPP) engine.
+
+
+
+
+
+
+
+
 Yes, that is an accurate and concise description of Google BigQuery. 
 Key characteristics summarized:
 Fully managed: Google handles infrastructure maintenance, patching, and administration [1].
