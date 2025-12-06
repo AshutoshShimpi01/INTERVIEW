@@ -2,10 +2,10 @@
 BigQuery's core architecture storage and compute, meaning these components operate and scale independently.
 
 
-Storage :
+Storage :       ( BigQuery storage, uses a columnar format optimized for fast analytical)
 BigQuery storage is a fully managed, durable, and highly available service that uses a columnar format (Capacitor) optimized for fast analytical queries. 
 
-Compute :
+Compute :    (Compute executing SQL queries using distributed query processing engine)
 The compute layer is responsible for executing SQL queries using Google's distributed query processing engine, Dremel
 
 
