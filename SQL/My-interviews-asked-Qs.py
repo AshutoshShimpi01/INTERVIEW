@@ -26,6 +26,34 @@ where rk = 2;     -- here 3rd, 4th, 5th any number of highest
 
 
 
+
 -- find all employees whose salary is greater than the average salary of all employees in the table
 
 select * from employees where salary > (select avg(salary) as av from employees);
+
+
+
+
+
+
+
+-- Top 3 customers by total spending in year 2024 for each region.
+(cust_name,region,total_spnt)
+
+Top 3 customers by total spending in year 2024;
+
+with total as
+(select c.cust_name,c.region,sum(o.total_amount) as total_spnt
+from Customers c
+join Orders o on c.cust_id = o.cust_id
+where order_date between '2024-01-01' and '2024-12-31'
+group by c.cust_name,c.region),
+rr as
+(
+select cust_name, region, total_spnt,
+rank() over(partition by region order by total_spnt desc) as rk
+from total
+)
+select *
+from rr
+where rk< 4;
