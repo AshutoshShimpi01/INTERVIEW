@@ -11,6 +11,9 @@ select name from employees e where  EXISTS      -- correlated subquery
 
 
 -- second highest salary from emp table
+
+select max(salary) from employees where salary not in (select max(salary) from employees);
+
 with ch as
 (select name,salary,
 rank() over(order by salary desc) as rk
@@ -18,6 +21,9 @@ from employees e)
 select *
 from ch
 where rk = 2;     -- here 3rd, 4th, 5th any number of highest 
+
+
+
 
 
 -- find all employees whose salary is greater than the average salary of all employees in the table
