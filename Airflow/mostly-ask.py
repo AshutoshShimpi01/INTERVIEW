@@ -1,5 +1,23 @@
 Here’s a **complete Q\&A guide for the 30 most asked Apache Airflow interview questions**:
 
+SIMPLE :
+---------
+Airflow orchestrating workflows, here we schedule, and monitor data pipelines
+Scheduler Schedule/Orchestrates task   -   Executor - Runs tasks  -    Workers Execute tasks assigned by the executor   -    Webserver  -  UI for monitoring DAGs
+DAG  is collections of Task.  process data in a parallely, It ensures no cyclic dependencies.
+HOW define a DAG  -  Using Python code,  specifying `dag_id`, `start_date`, `schedule_interval
+Operators in Airflow  -  PythonOperator, BashOperator
+role of the Metadata Database  -   Stores DAG runs, task states, and configuration.   
+What is the significance of task dependencies?  -  define execution order and prevent race conditions
+How do you handle task retries and failures?  -  Use `retries`, `retry_delay`, and `on_failure_callback` in task definition
+How does Airflow schedule tasks  -  Based on `schedule_interval` and `start_date`  (`start_date`: When DAG starts running.)  `schedule_interval`: Frequency of runs (e.g., daily, hourly)
+What are XComs    -   Mechanism for sharing data between tasks. Stored in metadata DB.
+How do you monitor DAG runs -  Via Web UI, logs
+
+
+  
+
+
 ***
 
 ### **Core Concepts**
