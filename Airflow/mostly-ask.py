@@ -2,7 +2,7 @@ Here’s a **complete Q\&A guide for the 30 most asked Apache Airflow interview 
 
 SIMPLE :
 ---------
-Airflow orchestrating workflows, here we schedule, and monitor data pipelines
+Airflow use for orchestrating workflows, here we schedule, and monitor data pipelines
 Scheduler Schedule/Orchestrates task   -   Executor - Runs tasks  -    Workers Execute tasks assigned by the executor   -    Webserver  -  UI for monitoring DAGs
 DAG  is collections of Task.  process data in a parallely, It ensures no cyclic dependencies.
 HOW define a DAG  -  Using Python code,  specifying `dag_id`, `start_date`, `schedule_interval
