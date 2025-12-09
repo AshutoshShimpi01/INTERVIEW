@@ -56,19 +56,8 @@ df_joined.select('*').show()
 
 ## Broadcast Join & Broadcast Variable in Spark
 
-### **Broadcast Variable**
-- **What:** A mechanism to **efficiently send small datasets** (lookup tables, configs) to **all worker nodes**.
-- **Why:** Avoids network shuffle and repeated serialization.
-- **Size limit:** Usually <10MB (configurable).
 
-```python
-# Create broadcast variable
-small_df = spark.createDataFrame([...])  # small lookup table
-broadcast_var = spark.sparkContext.broadcast(small_df.collectAsMap())
 
-# Use in transformation
-rdd.map(lambda x: (x[0], broadcast_var.value.get(x[0], 0)))
-```
 
 ### **Broadcast Join**
 - **What:** When Spark **automatically broadcasts** a small table during JOIN to avoid shuffle.
@@ -90,14 +79,76 @@ spark.sql("SELECT /*+ BROADCAST(small_table) */ * FROM large_table JOIN small_ta
 
 **Use case:** Joining telecom customer lookup (small) with CDR data (large).
 
-[1](https://rockthejvm.com/articles/broadcast-joins-in-apache-spark-an-optimization-technique)
-[2](https://www.educative.io/answers/what-is-pyspark-broadcast-join)
-[3](https://www.designandexecute.com/designs/increase-your-performance-using-a-broadcast-join-in-apache-spark/)
-[4](https://stackoverflow.com/questions/37487318/spark-sql-broadcast-hash-join)
-[5](https://www.linkedin.com/pulse/apache-spark-101-shuffle-join-vs-broadcast-joins-shanoj-kumar-v-g779c)
-[6](https://www.linkedin.com/pulse/spark-join-strategies-mastering-joins-apache-venkatesh-nandikolla-mk4qc)
-[7](https://www.youtube.com/watch?v=B9aY7KkTLTw)
-[8](https://www.canadiandataguy.com/p/spark-join-strategies-explained-broadcast)
-[9](https://www.mungingdata.com/apache-spark/broadcast-joins/)
-[10](https://learn.microsoft.com/en-us/answers/questions/1657931/coalesce-and-broadcast-join)
+
+
+
+
+
+
+### **Broadcast Variable**
+- **What:** A mechanism to **efficiently send small datasets** (lookup tables, configs) to **all worker nodes**.
+- **Why:** Avoids network shuffle and repeated serialization.
+- **Size limit:** Usually <10MB (configurable).
+
+```python
+# Create broadcast variable
+small_df = spark.createDataFrame([...])  # small lookup table
+broadcast_var = spark.sparkContext.broadcast(small_df.collectAsMap())
+
+# Use in transformation
+rdd.map(lambda x: (x[0], broadcast_var.value.get(x[0], 0)))
+                                 
+
+------------------------------
+Simple Broadcast Variable Example
+-------------------------------
+
+
+
+## Simple Broadcast Variable Example
+
+**Scenario:** Convert state codes to full names using a lookup map.
+
+```python
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("BroadcastExample").getOrCreate()
+sc = spark.sparkContext
+
+# 1. Create small lookup data (broadcast this)
+state_lookup = {"CA": "California", "NY": "New York", "FL": "Florida"}
+
+# 2. Create BROADCAST variable
+broadcast_states = sc.broadcast(state_lookup)
+
+# 3. Create sample data RDD
+data = [("James", "CA"), ("Michael", "NY"), ("Robert", "FL")]
+rdd = sc.parallelize(data)
+
+# 4. Use broadcast variable in transformation
+result = rdd.map(lambda x: (x[0], broadcast_states.value[x[1]]))
+
+# 5. Show result
+print(result.collect())
+# Output: [('James', 'California'), ('Michael', 'New York'), ('Robert', 'Florida')]
+```
+
+## Key Points:
+- **Small data** (`state_lookup`) → **broadcast** to all workers
+- Access with `broadcast_states.value`
+- **No shuffle** - lookup data cached on every executor
+- **Perfect for:** Customer lookup, config maps, small dimension tables
+
+**Interview one-liner:** "Broadcast variables cache small lookup data on all executors so every task can access it without network shuffle."
+
+[1](https://blog.nashtechglobal.com/spark-broadcast-variables-simplified-with-example/)
+[2](https://spark.apache.org/docs/latest/api/java/org/apache/spark/broadcast/Broadcast.html)
+[3](https://supergloo.com/spark/spark-broadcast-variables-when-and-why/)
+[4](https://spark.apache.org/docs/3.5.0/api/scala/org/apache/spark/broadcast/Broadcast.html)
+[5](https://api-docs.databricks.com/scala/spark/latest/org/apache/spark/broadcast/Broadcast.html)
+[6](https://sparkbyexamples.com/pyspark/pyspark-broadcast-variables/)
+[7](https://umbertogriffo.gitbook.io/apache-spark-best-practices-and-tuning/rdd/when_to_use_broadcast_variable)
+[8](https://www.developerindian.com/articles/broadcast-variables-and-accumulators-in-apache-spark-and-pyspark)
+[9](https://www.projectpro.io/recipes/explain-broadcast-shared-variables-spark)
+[10](https://books.japila.pl/apache-spark-internals/broadcast-variables/)
 
