@@ -62,3 +62,13 @@ print(output)
 
 -----------------------------------------------
 
+
+# The mobile number string
+mobile_number = "+91 7030210200"
+
+# Use .replace() to substitute "+91 " with an empty string ""
+cleaned_number = mobile_number.replace("+91 ", "")
+
+print(cleaned_number) 
+# Output: 7030210200
+
