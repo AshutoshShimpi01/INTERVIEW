@@ -48,15 +48,15 @@ from collections import *
 
 A = [1,3,2,4,1,5,3,2,5]
 
-res = []
-temp = set()
+output = []
 
 for i in A:
-    if i not in res:
-        res.append(i)
-        temp.add(i)
+    if i not in output:
+        output.append(i)
         
-print(res)
+print(output)
+
+#. [1, 3, 2, 4, 5]
 
 
 
