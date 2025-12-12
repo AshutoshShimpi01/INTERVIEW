@@ -16,7 +16,22 @@ print(output)
 Enter a String : aaabbc
 a3b2c1
 
+------
 
+from collections import Counter
+
+st = input('Enter a string. : ')
+output = ''
+
+counts = Counter(st)
+
+for char, count in counts.items():
+
+    output += (char * count) + str(count)
+    
+print(output). 
+
+# aaa3bb2c1
 
 -----------------------------------------------
 
