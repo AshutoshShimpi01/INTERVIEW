@@ -29,7 +29,7 @@ Here are 15 scenario-based PySpark interview questions with concise sample answe
    Spark rebuilds the lost partition from lineage (previous steps), ensuring replay and fault tolerance without data loss.
 
 9. **Parquet vs. CSV: When to use each?**  
-   Use Parquet for analytics—smaller size, columnar reads, and fast performance; use CSV for compatibility if downstream doesn’t support Parquet.
+   Use Parquet for analytics—Large size, columnar reads, and fast performance; use CSV for compatibility if downstream doesn’t support Parquet.
 
 10. **Why use window functions in PySpark?**  
     For calculations across a moving window of rows (like rolling sums), especially for time-based analytics and grouped aggregations.
